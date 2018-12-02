@@ -1,0 +1,416 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "GraphQL eXtended",
+  "patterns": [
+    {
+      "include": "#comment"
+    },
+    {
+      "include": "#comment-multiline"
+    },
+    {
+      "include": "#type-declaration"
+    },
+    {
+      "include": "#scalar-declaration"
+    },
+    {
+      "include": "#enum-declaration"
+    },
+    {
+      "include": "#operation"
+    },
+    {
+      "include": "#fragment"
+    },
+    {
+      "include": "#selection-set"
+    },
+    {
+      "include": "#variable-declarations"
+    },
+    {
+      "include": "#type-condition"
+    }
+  ],
+  "repository": {
+    "comment": {
+      "name": "comment.line.number-sign.graphql",
+      "match": "#.*$",
+	  "patterns": []
+    },
+    "comment-multiline": {
+      "name": "comment.block.graphql",
+      "begin": "\"\"\"",
+      "end": "\"\"\"",
+	  "patterns": []
+    },
+    "string": {
+      "name": "string.quoted.double",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "include": "#escapedCharacter"
+        }
+      ]
+    },
+    "escapedCharacter": {
+      "name": "constant.character.escape",
+      "match": "\\\\(u[0-9A-Fa-f]{4}|[\"\\\\/bfnrt])",
+	  "patterns": []
+    },
+    "number": {
+      "name": "constant.numeric",
+      "match": "(\\-?)\\d+\\.?\\d*[eE]?[\\+\\-]?\\d*",
+      "captures": {
+        "1": {
+          "name": "keyword.operator"
+        }
+      },
+	  "patterns": []
+    },
+    "boolean": {
+      "name": "constant.language.boolean",
+      "match": "(true|false)",
+	  "patterns": []
+    },
+    "null": {
+      "name": "constant.language.null",
+      "match": "null",
+	  "patterns": []
+    },
+    "enum": {
+      "name": "support.constant.enum",
+      "match": "[_A-Za-z][_0-9A-Za-z]*",
+	  "patterns": []
+    },
+    "directive": {
+      "name": "meta.directive.graphql",
+      "match": "(@)\\s*([_A-Za-z][_0-9A-Za-z]*)",
+      "captures": {
+        "1": {
+          "name": "entity.name.function"
+        },
+        "2": {
+          "name": "entity.name.function"
+        }
+      },
+	  "patterns": []
+	},
+	"js-expression": {
+      "begin": "(\\{)",
+      "name": "resolver.gqlx.js",
+      "contentName": "meta.embedded.block.js",
+      "patterns": [
+        {
+          "include": "source.js"
+        }
+      ],
+      "end": "(\\})",
+      "endCaptures": "resolver.gqlx.js"
+    },
+    "enum-declaration": {
+      "name": "meta.enum-declaration.graphql",
+      "begin": "(enum)\\s+([_A-Za-z][_0-9A-Za-z]+)\\s+\\{",
+      "end": "\\}",
+      "beginCaptures": {
+        "1": {
+          "name": "storage.type"
+        },
+        "2": {
+          "name": "entity.name.type"
+        }
+      },
+      "patterns": [
+        {
+          "name": "enum"
+        }
+      ]
+    },
+    "scalar-declaration": {
+      "name": "meta.scalar-declaration.graphql",
+      "match": "(scalar)\\s+([_A-Za-z][_0-9A-Za-z]+)",
+      "captures": {
+        "1": {
+          "name": "storage.type"
+        },
+        "2": {
+          "name": "entity.name.type"
+        }
+      },
+	  "patterns": []
+    },
+    "type-declaration": {
+      "name": "meta.type-declaration.graphql",
+      "begin": "(input|type|interface)\\s+([_A-Za-z][_0-9A-Za-z]+)\\s+((@)\\s*([_A-Za-z][_0-9A-Za-z]*))?\\s*\\{",
+      "end": "\\}",
+      "beginCaptures": {
+        "1": {
+          "name": "storage.type"
+        },
+        "2": {
+          "name": "entity.name.type"
+        },
+        "4": {
+          "name": "entity.name.function"
+        },
+        "5": {
+          "name": "entity.name.function"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#comment"
+        },
+        {
+          "include": "#directive"
+        },
+        {
+          "include": "#arguments"
+        },
+        {
+          "include": "#type-field"
+		},
+		{
+		  "include": "#js-expression"
+		},
+        {
+          "include": "#variable-type"
+        },
+        {
+          "include": "#variable-array"
+        },
+        {
+          "include": "#variable-bang"
+        }
+      ]
+    },
+    "type-field": {
+      "name": "entity.section",
+      "match": "[_A-Za-z][_0-9A-Za-z]*(\\s*:)",
+      "captures": {
+        "1": {
+          "name": "keyword.operator"
+        }
+      },
+	  "patterns": []
+    },
+    "operation": {
+      "name": "meta.operation.graphql",
+      "match": "(query|mutation|subscription)\\s*([_A-Za-z][_0-9A-Za-z]*)",
+      "captures": {
+        "1": {
+          "name": "storage.type"
+        },
+        "2": {
+          "name": "entity.name.type"
+        }
+      },
+	  "patterns": []
+    },
+    "fragment": {
+      "name": "meta.fragment.graphql",
+      "match": "(fragment)\\s*([_A-Za-z][_0-9A-Za-z]*)",
+      "captures": {
+        "1": {
+          "name": "storage.type"
+        },
+        "2": {
+          "name": "entity.name.type"
+        }
+      },
+	  "patterns": []
+    },
+    "fragment-spread": {
+      "name": "meta.fragment-spread.graphql",
+      "match": "(\\.\\.\\.)\\s*(?!on)([_A-Za-z][_0-9A-Za-z]+)?",
+      "captures": {
+        "1": {
+          "name": "keyword.operator"
+        },
+        "2": {
+          "name": "entity.name.type"
+        }
+      },
+	  "patterns": []
+    },
+    "type-condition": {
+      "name": "meta.type-condition.graphql",
+      "match": "(on)\\s+([_A-Za-z][_0-9A-Za-z]*)",
+      "captures": {
+        "1": {
+          "name": "keyword.operator"
+        },
+        "2": {
+          "name": "entity.name.type"
+        }
+      },
+	  "patterns": []
+    },
+    "variable-declarations": {
+      "name": "meta.variable-declarations",
+      "begin": "\\(",
+      "end": "\\)",
+      "patterns": [
+        {
+          "include": "#variable-declaration"
+        },
+        {
+          "include": "#variable-type"
+        },
+        {
+          "include": "#variable-array"
+        },
+        {
+          "include": "#variable-bang"
+        },
+        {
+          "include": "#variable-default"
+        },
+        {
+          "include": "#value"
+        },
+        {
+          "include": "#comment"
+        }
+      ]
+    },
+    "variable-declaration": {
+      "name": "variable.parameter",
+      "match": "\\$[_A-Za-z][_0-9A-Za-z]*(\\s*:)",
+      "captures": {
+        "1": {
+          "name": "keyword.operator"
+        }
+      },
+	  "patterns": []
+    },
+    "variable-name": {
+      "name": "variable.parameter",
+      "match": "\\$[_A-Za-z][_0-9A-Za-z]*",
+	  "patterns": []
+    },
+    "variable-type": {
+      "name": "meta.variable-type.graphql",
+      "match": "([_A-Za-z][_0-9A-Za-z]*)",
+      "captures": {
+        "1": {
+          "name": "entity.name.type"
+        }
+      },
+	  "patterns": []
+    },
+    "variable-array": {
+      "name": "meta.variable-array.graphql",
+      "begin": "\\[",
+      "end": "\\]",
+      "patterns": [
+        {
+          "include": "#variable-type"
+        },
+        {
+          "include": "#variable-bang"
+        }
+      ]
+    },
+    "variable-bang": {
+      "name": "keyword.operator",
+      "match": "\\!",
+	  "patterns": []
+    },
+    "variable-default": {
+      "name": "keyword.operator",
+      "match": "=",
+	  "patterns": []
+    },
+    "selection-set": {
+      "name": "meta.selection-set.graphql",
+      "begin": "\\{",
+      "end": "\\}",
+      "patterns": [
+        {
+          "include": "#comment"
+        },
+        {
+          "include": "#selection-set"
+        },
+        {
+          "include": "#fragment-spread"
+        },
+        {
+          "include": "#type-condition"
+        },
+        {
+          "include": "#directive"
+        },
+        {
+          "include": "#arguments"
+        },
+        {
+          "include": "#alias"
+        }
+      ]
+    },
+    "arguments": {
+      "name": "meta.arguments",
+      "begin": "\\(",
+      "end": "\\)",
+      "patterns": [
+        {
+          "include": "#value"
+        },
+        {
+          "include": "#comment"
+        }
+      ]
+    },
+    "value": {
+      "name": "meta.value.graphql",
+      "patterns": [
+        {
+          "include": "#variable-name"
+        },
+        {
+          "include": "#argument"
+        },
+        {
+          "include": "#string"
+        },
+        {
+          "include": "#number"
+        },
+        {
+          "include": "#boolean"
+        },
+        {
+          "include": "#null"
+        },
+        {
+          "include": "#enum"
+        }
+      ]
+    },
+    "argument": {
+      "name": "variable.parameter",
+      "match": "[_A-Za-z][_0-9A-Za-z]*(\\s*:)",
+      "captures": {
+        "1": {
+          "name": "keyword.operator"
+        }
+	  },
+	  "patterns": []
+    },
+    "alias": {
+      "name": "entity.section",
+      "match": "[_A-Za-z][_0-9A-Za-z]*(\\s*:)",
+      "captures": {
+        "1": {
+          "name": "keyword.operator"
+        }
+      },
+	  "patterns": []
+    }
+  },
+  "scopeName": "source.gqlx"
+}

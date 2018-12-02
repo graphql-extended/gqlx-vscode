@@ -1,0 +1,65 @@
+{
+  "name": "gqlx-vscode",
+  "license": "MIT",
+  "author": "graphql-extended <gqlx@anglevisions.com>",
+  "displayName": "GraphQL eXtended Language Support",
+  "description": "Provides language support for writing schemas using the GraphQL eXtended language.",
+  "repository": "https://github.com/graphql-extended/gqlx-vscode.git",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.29.0"
+  },
+  "scripts": {
+    "vscode:prepublish": "tsc -p ./",
+    "watch:compile": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "node ./node_modules/vscode/bin/test"
+  },
+  "main": "./bin/client/extension",
+  "activationEvents": [
+    "onLanguage:gqlx"
+  ],
+  "publisher": "florianrappl",
+  "icon": "images/icon.png",
+  "galleryBanner": {
+    "color": "#171E26",
+    "theme": "dark"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "gqlx",
+        "aliases": [
+          "GraphQL eXtended",
+          "gqlx"
+        ],
+        "extensions": [
+          ".gqlx"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "gqlx",
+        "scopeName": "source.gqlx",
+        "path": "./syntaxes/gqlx.tmLanguage.json",
+        "embeddedLanguages": {
+          "meta.embedded.block.js": "js"
+        }
+      }
+    ]
+  },
+  "dependencies": {
+    "graphql": "^0.13.2",
+    "vscode": "^1.1.22",
+    "vscode-languageclient": "^5.1.1",
+    "vscode-languageserver": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^10.12.11"
+  }
+}
