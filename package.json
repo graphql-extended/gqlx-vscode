@@ -54,12 +54,14 @@
     ]
   },
   "dependencies": {
-    "graphql": "^0.13.2",
-    "vscode": "^1.1.22",
-    "vscode-languageclient": "^5.1.1",
-    "vscode-languageserver": "^5.1.0"
+    "gqlx-js": "^0.2.2",
+    "graphql": "^14.1.1",
+    "vscode": "^1.1.30",
+    "vscode-languageclient": "^5.2.1",
+    "vscode-languageserver": "^5.2.1"
   },
   "devDependencies": {
-    "@types/node": "^10.12.11"
+    "@types/node": "^11.11.0",
+    "typescript": "^3.3.3333"
   }
 }
