@@ -54,7 +54,7 @@
     ]
   },
   "dependencies": {
-    "gqlx-js": "^0.2.2",
+    "gqlx-js": "^0.2.3",
     "graphql": "^14.1.1",
     "vscode": "^1.1.30",
     "vscode-languageclient": "^5.2.1",
