@@ -5,7 +5,7 @@
   "displayName": "GraphQL eXtended Language Support",
   "description": "Provides language support for writing schemas using the GraphQL eXtended language.",
   "repository": "https://github.com/graphql-extended/gqlx-vscode.git",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "engines": {
     "vscode": "^1.29.0"
   },
@@ -54,7 +54,7 @@
     ]
   },
   "dependencies": {
-    "gqlx-js": "^0.2.5",
+    "gqlx-js": "^0.2.7",
     "graphql": "^14.3.1"
   },
   "devDependencies": {
